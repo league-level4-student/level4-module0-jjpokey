@@ -17,7 +17,7 @@ public class GridPanel extends JPanel{
 	private int cols;
 	
 	//1. Create a 2D array of pixels. Do not initialize it yet.
-	
+	Pixel[][] p;
 	private Color color;
 	
 	public GridPanel(int w, int h, int r, int c) {
@@ -34,10 +34,14 @@ public class GridPanel extends JPanel{
 		setPreferredSize(new Dimension(windowWidth, windowHeight));
 		
 		//2. Initialize the pixel array using the rows and cols variables.
-		
+		p = new Pixel[rows][cols];
 		
 		//3. Iterate through the array and initialize each element to a new pixel.
-		
+		for(int i = 0; i < p.length; i++) {
+			for(int j = 0; j < p[i].length; j++) {
+				p[i][j] = new Pixel(rows,cols);
+			}
+		}
 		
 	}
 	
