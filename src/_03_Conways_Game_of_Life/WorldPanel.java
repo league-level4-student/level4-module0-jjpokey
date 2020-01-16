@@ -21,7 +21,7 @@ int ra;
 	private Timer timer;
 	
 	//1. Create a 2D array of Cells. Do not initialize it.
-Cell[][] c;
+Cell[][] cells;
 	
 	
 	public WorldPanel(int w, int h, int cpr) {
@@ -33,13 +33,13 @@ Cell[][] c;
 		//2. Calculate the cell size.
 		cellSize = w/cpr;
 		//3. Initialize the cell array to the appropriate size.
-		c = new Cell[w][h];
+		cells = new Cell[w][h];
 		//3. Iterate through the array and initialize each cell.
 		//   Don't forget to consider the cell's dimensions when 
 		//   passing in the location.
-		for(int i = 0; i < c.length; i++) {
-			for(int j = 0; j < c[i].length; j++) {
-				c = new Cell[i / w][i / h];
+		for(int i = 0; i < cells.length; i++) {
+			for(int j = 0; j < cells[i].length; j++) {
+				cells = new Cell[i / w][i / h];
 			}
 		}
 	}
@@ -47,14 +47,14 @@ Cell[][] c;
 	public void randomizeCells() {
 		//4. Iterate through each cell and randomly set each
 		//   cell's isAlive member to true of false
-		for(int i = 0; i < c.length; i++) {
-			for(int j = 0; j < c[i].length; j++) {
+		for(int i = 0; i < cells.length; i++) {
+			for(int j = 0; j < cells[i].length; j++) {
 				ra = r.nextInt(2);
 				if(ra == 0) {
-					c[i][j].isAlive = false;
+					cells[i][j].isAlive = false;
 				}
 				else if(ra == 1) {
-					c[i][j].isAlive = true;
+					cells[i][j].isAlive = true;
 				}
 			}
 		}
@@ -63,9 +63,9 @@ Cell[][] c;
 	
 	public void clearCells() {
 		//5. Iterate through the cells and set them all to dead.
-		for(int i = 0; i < c.length; i++) {
-			for(int j = 0; j < c[i].length; j++) {
-				c[i][j].isAlive = false;
+		for(int i = 0; i < cells.length; i++) {
+			for(int j = 0; j < cells[i].length; j++) {
+				cells[i][j].isAlive = false;
 			}
 		}
 		repaint();
@@ -86,9 +86,9 @@ Cell[][] c;
 	@Override
 	public void paintComponent(Graphics g) {
 		//6. Iterate through the cells and draw them all
-		for(int i = 0; i < c.length; i++) {
-			for(int j = 0; j < c[i].length; j++) {
-				c[i][j].draw(g);
+		for(int i = 0; i < cells.length; i++) {
+			for(int j = 0; j < cells[i].length; j++) {
+				cells[i][j].draw(g);
 			}
 		}
 		
@@ -104,8 +104,8 @@ Cell[][] c;
 		// . using the getLivingNeighbors method.
 		int[][] livingNeighbors = new int[cellsPerRow][cellsPerRow];
 		
-		for(int i = 0; i < c.length; i++) {
-			for(int j = 0; j < c[i].length; j++) {
+		for(int i = 0; i < cells.length; i++) {
+			for(int j = 0; j < cells[i].length; j++) {
 				livingNeighbors[i][j] = getLivingNeighbors(i,j); 
 				
 
@@ -113,7 +113,13 @@ Cell[][] c;
 		}
 		//8. check if each cell should live or die
 	
-		
+		for(int i = 0; i < cells.length; i++) {
+			for(int j = 0; j < cells[i].length; j++) {
+				cells[i][j].liveOrDie(getLivingNeighbors(i, j));
+				
+
+			}
+		}
 		
 		
 		repaint();
@@ -123,9 +129,44 @@ Cell[][] c;
 	//   It returns an int of 8 or less based on how many
 	//   living neighbors there are of the 
 	//   cell identified by x and y
-	public int getLivingNeighbors(int x, int y){
+	public int getLivingNeighbors(int rows, int colums){
+//Top Left
+		if(rows > 0 && colums > 0) {
+
+//DOUBLE CHECK NOT SURE IF CORRECT
+		}
+//Top Right
+			if(rows > 0 && colums < cells.length - 1) {
+					
+		}
+//Top Middle
+		if(rows > 0 && (colums != 0 && colums != cells.length - 1)) {
+			
+		}
+//Bottom Left
+		if(rows < cells.length - 1 && colums > 0) {
+			
+		}
+//Bottom Right
+		if(rows < cells.length - 1 && colums < cells.length - 1) {
+			
+		}
+//Bottom Middle
+		if(rows < cells.length - 1 && (colums != 0 && colums != cells.length - 1)) {
+			
+		}
+//Left Middle
+		if(colums > 0 && (rows != 0 && rows != cells.length - 1)) {
+			
+		}
+//Right Middle
+		if(colums < cells.length - 1 && (rows != 0 && rows != cells.length - 1)) {
+			
+		}
 		return 0;
+		
 	}
+	
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
