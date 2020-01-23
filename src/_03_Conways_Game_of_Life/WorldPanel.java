@@ -15,6 +15,9 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 	private static final long serialVersionUID = 1L;
 	private int cellsPerRow;
 	private int cellSize;
+	int row;
+	int colum;
+	int livingNeighbors = 0;
 	Random r = new Random();
 int ra;
 	
@@ -39,7 +42,7 @@ Cell[][] cells;
 		//   passing in the location.
 		for(int i = 0; i < cells.length; i++) {
 			for(int j = 0; j < cells[i].length; j++) {
-				cells = new Cell[i / w][i / h];
+				cells[i][j] = new Cell(i / w , i / h, cellSize);
 			}
 		}
 	}
@@ -130,40 +133,174 @@ Cell[][] cells;
 	//   living neighbors there are of the 
 	//   cell identified by x and y
 	public int getLivingNeighbors(int rows, int colums){
-//Top Left
-		if(rows > 0 && colums > 0) {
 
-//DOUBLE CHECK NOT SURE IF CORRECT
-		}
-//Top Right
-			if(rows > 0 && colums < cells.length - 1) {
-					
-		}
-//Top Middle
-		if(rows > 0 && (colums != 0 && colums != cells.length - 1)) {
+//Top Left *
+		if(rows == 0 && colums == 0) {
+	//check
+			if(cells[rows + 1][colums].isAlive) {
+				livingNeighbors++;
+			}
+			if(cells[rows][colums + 1].isAlive) {
+				livingNeighbors++;
+			}
+			if(cells[rows + 1][colums + 1].isAlive) {
+				livingNeighbors++;
+			}
 			
 		}
-//Bottom Left
-		if(rows < cells.length - 1 && colums > 0) {
+//Top Right *
+			if(rows == 0 && colums == cells.length - 1) {
+	//check
+				if(cells[rows + 1][colums].isAlive) {
+					livingNeighbors++;
+				}
+				if(cells[rows][colums -1].isAlive) {
+					livingNeighbors++;
+				}
+				if(cells[rows + 1][colums - 1].isAlive) {
+					livingNeighbors++;
+				}
+		}
+//Top Middle *
+		if(rows == 0 && (colums != 0 && colums != cells.length - 1)) {
+	//check
+			if(cells[rows + 1][colums].isAlive) {
+				livingNeighbors++;
+			}
+			if(cells[rows][colums + 1].isAlive) {
+				livingNeighbors++;
+			}
+			if(cells[rows][colums - 1].isAlive) {
+				livingNeighbors++;
+			}
+			if(cells[rows + 1][colums - 1].isAlive) {
+				livingNeighbors++;
+			}
+			if(cells[rows + 1][colums + 1].isAlive) {
+				livingNeighbors++;
+			}
 			
 		}
-//Bottom Right
-		if(rows < cells.length - 1 && colums < cells.length - 1) {
+//Bottom Left *
+		if(rows == cells.length - 1 && colums == 0) {
+	//check
+			if(cells[rows - 1][colums + 1].isAlive) {
+				livingNeighbors++;
+			}
+			if(cells[rows][colums + 1].isAlive) {
+				livingNeighbors++;
+			}
+			if(cells[rows - 1][colums].isAlive) {
+				livingNeighbors++;
+			}
 			
 		}
-//Bottom Middle
-		if(rows < cells.length - 1 && (colums != 0 && colums != cells.length - 1)) {
+//Bottom Right *
+		if(rows == cells.length - 1 && colums == cells.length - 1) {
+	//check
+			if(cells[rows][colums - 1].isAlive) {
+				livingNeighbors++;
+			}
+			if(cells[rows - 1][colums].isAlive) {
+				livingNeighbors++;
+			}
+			if(cells[rows - 1][colums - 1].isAlive) {
+				livingNeighbors++;
+			}
 			
 		}
-//Left Middle
-		if(colums > 0 && (rows != 0 && rows != cells.length - 1)) {
+//Bottom Middle *
+		if(rows == cells.length - 1 && (colums != 0 && colums != cells.length - 1)) {
+	//check
+			if(cells[rows][colums - 1].isAlive) {
+				livingNeighbors++;
+			}
+			if(cells[rows][colums + 1].isAlive) {
+				livingNeighbors++;
+			}
+			if(cells[rows - 1][colums].isAlive) {
+				livingNeighbors++;
+			}
+			if(cells[rows - 1][colums - 1].isAlive) {
+				livingNeighbors++;
+			}
+			if(cells[rows - 1][colums + 1].isAlive) {
+				livingNeighbors++;
+			}
 			
 		}
-//Right Middle
-		if(colums < cells.length - 1 && (rows != 0 && rows != cells.length - 1)) {
+//Left Middle *
+		if(colums == 0 && (rows != 0 && rows != cells.length - 1)) {
+	//check
+			if(cells[rows - 1][colums].isAlive) {
+				livingNeighbors++;
+			}
+			if(cells[rows + 1][colums].isAlive) {
+				livingNeighbors++;
+			}
+			if(cells[rows][colums + 1].isAlive) {
+				livingNeighbors++;
+			}
+			if(cells[rows - 1][colums + 1].isAlive) {
+				livingNeighbors++;
+			}
+			if(cells[rows + 1][colums + 1].isAlive) {
+				livingNeighbors++;
+			}
 			
 		}
-		return 0;
+//Right Middle *
+		if(colums == cells.length - 1 && (rows != 0 && rows != cells.length - 1)) {
+	//check
+			if(cells[rows][colums - 1].isAlive) {
+				livingNeighbors++;
+			}
+			if(cells[rows + 1][colums].isAlive) {
+				livingNeighbors++;
+			}
+			if(cells[rows - 1][colums].isAlive) {
+				livingNeighbors++;
+			}
+			if(cells[rows - 1][colums - 1].isAlive) {
+				livingNeighbors++;
+			}
+			if(cells[rows + 1][colums - 1].isAlive) {
+				livingNeighbors++;
+			}
+		}
+//Middle
+		if(colums != 0 && colums != cells.length - 1 && rows != 0 && rows != cells.length - 1) {
+	//check
+			if(cells[rows + 1][colums].isAlive) {
+				livingNeighbors++;
+			}
+			if(cells[rows - 1][colums].isAlive) {
+				livingNeighbors++;
+			}
+			if(cells[rows][colums + 1].isAlive) {
+				livingNeighbors++;
+			}
+			if(cells[rows][colums - 1].isAlive) {
+				livingNeighbors++;
+			}
+			if(cells[rows + 1][colums + 1].isAlive) {
+				livingNeighbors++;
+			}
+			if(cells[rows + 1][colums - 1].isAlive) {
+				livingNeighbors++;
+			}
+			if(cells[rows - 1][colums + 1].isAlive) {
+				livingNeighbors++;
+			}
+			if(cells[rows - 1][colums - 1].isAlive) {
+				livingNeighbors++;
+			}
+		}
+		
+		
+		
+		
+		return livingNeighbors;
 		
 	}
 	
@@ -190,6 +327,17 @@ Cell[][] cells;
 		//10. Use e.getX() and e.getY() to determine
 		//    which cell is clicked. Then toggle
 		//    the isAlive variable for that cell.
+		
+int row = e.getX() / cellSize;
+int colum = e.getY() / cellSize;
+
+	cells[row][colum].isAlive = true;
+
+				
+			
+		
+		
+		
 		
 		
 		
