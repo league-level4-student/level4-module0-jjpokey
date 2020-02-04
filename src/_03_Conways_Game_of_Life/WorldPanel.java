@@ -17,7 +17,6 @@ public class WorldPanel extends JPanel implements MouseListener, ActionListener 
 	private int cellSize;
 	int row;
 	int colum;
-	int livingNeighbors = 0;
 	Random r = new Random();
 int ra;
 	
@@ -36,13 +35,13 @@ Cell[][] cells;
 		//2. Calculate the cell size.
 		cellSize = w/cpr;
 		//3. Initialize the cell array to the appropriate size.
-		cells = new Cell[w][h];
+		cells = new Cell[cpr][cpr];
 		//3. Iterate through the array and initialize each cell.
 		//   Don't forget to consider the cell's dimensions when 
 		//   passing in the location.
 		for(int i = 0; i < cells.length; i++) {
 			for(int j = 0; j < cells[i].length; j++) {
-				cells[i][j] = new Cell(i / w , i / h, cellSize);
+				cells[i][j] = new Cell(i * cellSize , j * cellSize, cellSize);
 			}
 		}
 	}
@@ -118,7 +117,7 @@ Cell[][] cells;
 	
 		for(int i = 0; i < cells.length; i++) {
 			for(int j = 0; j < cells[i].length; j++) {
-				cells[i][j].liveOrDie(getLivingNeighbors(i, j));
+				cells[i][j].liveOrDie(livingNeighbors[i][j]);
 				
 
 			}
@@ -132,174 +131,174 @@ Cell[][] cells;
 	//   It returns an int of 8 or less based on how many
 	//   living neighbors there are of the 
 	//   cell identified by x and y
-	public int getLivingNeighbors(int rows, int colums){
-
+	public int getLivingNeighbors(int row, int colum){
+		int livingNeighbors = 0;
 //Top Left *
-		if(rows == 0 && colums == 0) {
+		if(row == 0 && colum == 0) {
 	//check
-			if(cells[rows + 1][colums].isAlive) {
+			if(cells[row + 1][colum].isAlive) {
 				livingNeighbors++;
 			}
-			if(cells[rows][colums + 1].isAlive) {
+			if(cells[row][colum + 1].isAlive) {
 				livingNeighbors++;
 			}
-			if(cells[rows + 1][colums + 1].isAlive) {
+			if(cells[row + 1][colum + 1].isAlive) {
 				livingNeighbors++;
 			}
 			
 		}
 //Top Right *
-			if(rows == 0 && colums == cells.length - 1) {
+		else if(row == 0 && colum == cells.length - 1) {
 	//check
-				if(cells[rows + 1][colums].isAlive) {
+				if(cells[row + 1][colum].isAlive) {
 					livingNeighbors++;
 				}
-				if(cells[rows][colums -1].isAlive) {
+				if(cells[row][colum -1].isAlive) {
 					livingNeighbors++;
 				}
-				if(cells[rows + 1][colums - 1].isAlive) {
+				if(cells[row + 1][colum - 1].isAlive) {
 					livingNeighbors++;
 				}
 		}
 //Top Middle *
-		if(rows == 0 && (colums != 0 && colums != cells.length - 1)) {
+		else if(row == 0 && (colum != 0 && colum != cells.length - 1)) {
 	//check
-			if(cells[rows + 1][colums].isAlive) {
+			if(cells[row + 1][colum].isAlive) {
 				livingNeighbors++;
 			}
-			if(cells[rows][colums + 1].isAlive) {
+			if(cells[row][colum + 1].isAlive) {
 				livingNeighbors++;
 			}
-			if(cells[rows][colums - 1].isAlive) {
+			if(cells[row][colum - 1].isAlive) {
 				livingNeighbors++;
 			}
-			if(cells[rows + 1][colums - 1].isAlive) {
+			if(cells[row + 1][colum - 1].isAlive) {
 				livingNeighbors++;
 			}
-			if(cells[rows + 1][colums + 1].isAlive) {
+			if(cells[row + 1][colum + 1].isAlive) {
 				livingNeighbors++;
 			}
 			
 		}
 //Bottom Left *
-		if(rows == cells.length - 1 && colums == 0) {
+		else if(row == cells.length - 1 && colum == 0) {
 	//check
-			if(cells[rows - 1][colums + 1].isAlive) {
+			if(cells[row - 1][colum + 1].isAlive) {
 				livingNeighbors++;
 			}
-			if(cells[rows][colums + 1].isAlive) {
+			if(cells[row][colum + 1].isAlive) {
 				livingNeighbors++;
 			}
-			if(cells[rows - 1][colums].isAlive) {
+			if(cells[row - 1][colum].isAlive) {
 				livingNeighbors++;
 			}
 			
 		}
 //Bottom Right *
-		if(rows == cells.length - 1 && colums == cells.length - 1) {
+		else if(row == cells.length - 1 && colum == cells.length - 1) {
 	//check
-			if(cells[rows][colums - 1].isAlive) {
+			if(cells[row][colum - 1].isAlive) {
 				livingNeighbors++;
 			}
-			if(cells[rows - 1][colums].isAlive) {
+			if(cells[row - 1][colum].isAlive) {
 				livingNeighbors++;
 			}
-			if(cells[rows - 1][colums - 1].isAlive) {
+			if(cells[row - 1][colum - 1].isAlive) {
 				livingNeighbors++;
 			}
 			
 		}
 //Bottom Middle *
-		if(rows == cells.length - 1 && (colums != 0 && colums != cells.length - 1)) {
+		else if(row == cells.length - 1 && (colum != 0 && colum != cells.length - 1)) {
 	//check
-			if(cells[rows][colums - 1].isAlive) {
+			if(cells[row][colum - 1].isAlive) {
 				livingNeighbors++;
 			}
-			if(cells[rows][colums + 1].isAlive) {
+			if(cells[row][colum + 1].isAlive) {
 				livingNeighbors++;
 			}
-			if(cells[rows - 1][colums].isAlive) {
+			if(cells[row - 1][colum].isAlive) {
 				livingNeighbors++;
 			}
-			if(cells[rows - 1][colums - 1].isAlive) {
+			if(cells[row - 1][colum - 1].isAlive) {
 				livingNeighbors++;
 			}
-			if(cells[rows - 1][colums + 1].isAlive) {
+			if(cells[row - 1][colum + 1].isAlive) {
 				livingNeighbors++;
 			}
 			
 		}
 //Left Middle *
-		if(colums == 0 && (rows != 0 && rows != cells.length - 1)) {
+		else if(colum == 0 && (row != 0 && row != cells.length - 1)) {
 	//check
-			if(cells[rows - 1][colums].isAlive) {
+			if(cells[row - 1][colum].isAlive) {
 				livingNeighbors++;
 			}
-			if(cells[rows + 1][colums].isAlive) {
+			if(cells[row + 1][colum].isAlive) {
 				livingNeighbors++;
 			}
-			if(cells[rows][colums + 1].isAlive) {
+			if(cells[row][colum + 1].isAlive) {
 				livingNeighbors++;
 			}
-			if(cells[rows - 1][colums + 1].isAlive) {
+			if(cells[row - 1][colum + 1].isAlive) {
 				livingNeighbors++;
 			}
-			if(cells[rows + 1][colums + 1].isAlive) {
+			if(cells[row + 1][colum + 1].isAlive) {
 				livingNeighbors++;
 			}
 			
 		}
 //Right Middle *
-		if(colums == cells.length - 1 && (rows != 0 && rows != cells.length - 1)) {
+		else if(colum == cells.length - 1 && (row != 0 && row != cells.length - 1)) {
 	//check
-			if(cells[rows][colums - 1].isAlive) {
+			if(cells[row][colum - 1].isAlive) {
 				livingNeighbors++;
 			}
-			if(cells[rows + 1][colums].isAlive) {
+			if(cells[row + 1][colum].isAlive) {
 				livingNeighbors++;
 			}
-			if(cells[rows - 1][colums].isAlive) {
+			if(cells[row - 1][colum].isAlive) {
 				livingNeighbors++;
 			}
-			if(cells[rows - 1][colums - 1].isAlive) {
+			if(cells[row - 1][colum - 1].isAlive) {
 				livingNeighbors++;
 			}
-			if(cells[rows + 1][colums - 1].isAlive) {
+			if(cells[row + 1][colum - 1].isAlive) {
 				livingNeighbors++;
 			}
 		}
 //Middle
-		if(colums != 0 && colums != cells.length - 1 && rows != 0 && rows != cells.length - 1) {
+		else if(colum != 0 && colum != cells.length - 1 && row != 0 && row != cells.length - 1) {
 	//check
-			if(cells[rows + 1][colums].isAlive) {
+			if(cells[row + 1][colum].isAlive) {
 				livingNeighbors++;
 			}
-			if(cells[rows - 1][colums].isAlive) {
+			if(cells[row - 1][colum].isAlive) {
 				livingNeighbors++;
 			}
-			if(cells[rows][colums + 1].isAlive) {
+			if(cells[row][colum + 1].isAlive) {
 				livingNeighbors++;
 			}
-			if(cells[rows][colums - 1].isAlive) {
+			if(cells[row][colum - 1].isAlive) {
 				livingNeighbors++;
 			}
-			if(cells[rows + 1][colums + 1].isAlive) {
+			if(cells[row + 1][colum + 1].isAlive) {
 				livingNeighbors++;
 			}
-			if(cells[rows + 1][colums - 1].isAlive) {
+			if(cells[row + 1][colum - 1].isAlive) {
 				livingNeighbors++;
 			}
-			if(cells[rows - 1][colums + 1].isAlive) {
+			if(cells[row - 1][colum + 1].isAlive) {
 				livingNeighbors++;
 			}
-			if(cells[rows - 1][colums - 1].isAlive) {
+			if(cells[row - 1][colum - 1].isAlive) {
 				livingNeighbors++;
 			}
 		}
 		
 		
 		
-		
+		System.out.println(livingNeighbors);
 		return livingNeighbors;
 		
 	}
