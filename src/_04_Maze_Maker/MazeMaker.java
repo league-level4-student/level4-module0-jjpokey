@@ -75,63 +75,34 @@ removeWalls(currentCell,unviseted.get(rand));
 	//   This method will check if c1 and c2 are adjacent.
 	//   If they are, the walls between them are removed.
 	private static void removeWalls(Cell c1, Cell c2) {
-		//TEST TEST TEST TEST TEST
-		System.out.println("c1 x =" + c1.getX());
-		System.out.println("c1 y =" + c1.getY());
-		System.out.println("c2 x =" + c2.getX());
-		System.out.println("c2 y =" + c2.getY());
-		System.out.println("test c1 + 1" + c1.getX() + 1);
-		//left wall
-		if(c1.getX() == 0) {
-			if(c1.getX() == c2.getX() - 1) {
+
+		
+		//bottom wall
+		if(c1.getY() == c2.getY() + 1) {
 				c1.setEastWall(false);
 				c2.setWestWall(false);
-			}
+			
 		}
-		else if(c2.getX() == 0) {
-			if(c2.getX() == c1.getX() - 1) {
+		
+		//top wall
+		if(c1.getY() == c2.getY() - 1) {
 				c2.setEastWall(false);
 				c1.setWestWall(false);
-			}
+			
 		}
 		//right wall
-		if(c1.getX() == 10) {
-			if(c1.getX() == c2.getX() + 1) {
-				c2.setEastWall(false);
-				c1.setWestWall(false);
-			}
-		}
-		else if(c2.getX() == 10) {
-			if(c2.getX() == c1.getX() + 1) {
-				c1.setEastWall(false);
-				c2.setWestWall(false);
-			}
-		}
-		//top wall
-		if(c1.getY() == 0) {
-			if(c1.getY() == c2.getY() - 1) {
+		if(c1.getX() == c2.getX() + 1) {
 				c2.setNorthWall(false);
 				c1.setSouthWall(false);
-			}
+				
+			
 		}
-		else if(c2.getY() == 0) {
-			if(c2.getY() == c1.getY() - 1) {
+
+		//left wall
+		 if(c1.getX() == c2.getX() - 1) {
 				c1.setNorthWall(false);
 				c2.setSouthWall(false);
-			}
-		}
-		//bottom wall
-		 if(c1.getY() == 10) {
-			if(c1.getY() == c2.getY() + 1) {
-				c1.setNorthWall(false);
-				c2.setSouthWall(false);
-			}
-		}
-		else if(c2.getY() == 10) {
-			if(c2.getY() == c1.getY() + 1) {
-				c2.setNorthWall(false);
-				c1.setSouthWall(false);
-			}
+				
 		}
 		
 	}
@@ -141,8 +112,29 @@ removeWalls(currentCell,unviseted.get(rand));
 	//   to the ArrayList
 	private static ArrayList<Cell> getUnvisitedNeighbors(Cell c) {
 		ArrayList<Cell> unvisited = new ArrayList<Cell>();
-if(!c.hasBeenVisited()) {
-unvisited.add(c);
+		
+if(c.getX() + 1 < maze.getWidth()) {
+	if(!maze.cells[c.getX() + 1][c.getY()].hasBeenVisited()) {
+		unvisited.add(c);
+	}
+}
+
+if(c.getX() - 1 < maze.getWidth()) {
+	if(!maze.cells[c.getX() - 1][c.getY()].hasBeenVisited()) {
+		unvisited.add(c);
+	}
+}
+
+if(c.getY() + 1 < maze.getHeight()) {
+	if(!maze.cells[c.getX()][c.getY() + 1].hasBeenVisited()) {
+		unvisited.add(c);
+	}
+}
+
+if(c.getY() - 1 < maze.getHeight()) {
+	if(!maze.cells[c.getX()][c.getY() - 1].hasBeenVisited()) {
+		unvisited.add(c);
+	}
 }
 		return unvisited;
 	}
