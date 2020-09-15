@@ -1,12 +1,21 @@
 package _02_Pixel_Art;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Hashtable;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,11 +26,15 @@ import javax.swing.event.ChangeListener;
 public class ColorSelectionPanel extends JPanel implements MouseListener, ChangeListener{
 	private static final long serialVersionUID = 1L;
 	
+	
+	
 	public static final int MAX_COLOR = 256;
 	
 	private JSlider rSlider;
 	private JSlider gSlider;
 	private JSlider bSlider;
+	private JButton loadB;
+	private JButton saveB;
 	
 	private Color color;
 	
@@ -37,6 +50,7 @@ public class ColorSelectionPanel extends JPanel implements MouseListener, Change
 		gSlider = new JSlider(JSlider.VERTICAL);
 		bSlider = new JSlider(JSlider.VERTICAL);
 		
+		
 		rSlider.setMinimum(0);
 		rSlider.setMaximum(MAX_COLOR - 1);
 		rSlider.setValue(0);
@@ -47,9 +61,11 @@ public class ColorSelectionPanel extends JPanel implements MouseListener, Change
 		bSlider.setMaximum(MAX_COLOR - 1);
 		bSlider.setValue(0);
 		
+		
 		rSlider.addChangeListener(this);
 		gSlider.addChangeListener(this);
 		bSlider.addChangeListener(this);
+		
 		
 		addMouseListener(this);
 		
@@ -71,6 +87,9 @@ public class ColorSelectionPanel extends JPanel implements MouseListener, Change
 		add(gSlider);
 		add(new JLabel("blue"));
 		add(bSlider);
+		
+		add(loadB);
+		add(saveB);
 	}
 
 	public Color getSelectedColor() {
@@ -125,4 +144,7 @@ public class ColorSelectionPanel extends JPanel implements MouseListener, Change
 		colorLabel.setIcon(new ImageIcon(colorImage));
 		add(colorLabel);
 	}
+	
+	
+
 }
